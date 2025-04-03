@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: paciente-service
+  profiles:
+    active:
+    - dev
+      
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:file:.env[.properties]
+    
+  cloud:
+    config:
+      uri: http://localhost:8050  
+    
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        
+server:
+  forward-headers-strategy: framework  # Habilita detección de protocolo HTTPS en producción    
+    
+springdoc:     
+  swagger-ui:
+    path: /swagger-ui-custom.html      
+        
