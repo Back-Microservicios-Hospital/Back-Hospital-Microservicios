@@ -8,11 +8,11 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.paciente.service</groupId>
-	<artifactId>paciente-service</artifactId>
+	<groupId>com.doctor.service</groupId>
+	<artifactId>doctor-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>paciente-service</name>
-	<description>Este es el servicio para paciente - Backend-Hospital-Microservicios</description>
+	<name>doctor-service</name>
+	<description>Este es el servicio para doctor - Backend-Hospital-Microservicios</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -51,8 +51,8 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -74,17 +74,6 @@
 			<version>2.2.0</version>
 		</dependency>
 		
-		<!-- GraphQL -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-graphql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.graphql</groupId>
-			<artifactId>spring-graphql-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
