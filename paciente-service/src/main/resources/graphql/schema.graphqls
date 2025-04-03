@@ -1,0 +1,13 @@
+type Query{
+
+	findPacientes: [Paciente]
+}
+
+type Paciente{
+	id: ID,
+	nombre: String,
+	apellido: String,
+	dni: String,
+	telefono: String,
+	fechaNacimiento: String 
+}
