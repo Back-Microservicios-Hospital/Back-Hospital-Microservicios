@@ -1,0 +1,9 @@
+#Data para la tabla especialidad
+INSERT INTO especialidad (id, nombre) VALUES 
+(1, 'Cardiología'),
+(2, 'Neurología'),
+(3, 'Pediatría'),
+(4, 'Dermatología'),
+(5, 'Ginecología'),
+(6, 'Oftalmología'),
+(7, 'Psiquiatría');

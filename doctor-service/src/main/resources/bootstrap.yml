@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: doctor-service
+  profiles:
+    active:
+    - dev
+    
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:file:.env[.properties]
+    
+  cloud:
+    config:
+      uri: http://localhost:8050 
+  datasource:
+    password: ${POSTGRESQL_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/${POSTGRESQL_DATABASE} #Esto es de manera local
+    #url: jdbc:postgresql://postgres:5432/inventario_zapatillas #Esto es para conectarse una vez dockerizado este proyecto
+    username: ${POSTGRESQL_USER}
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+    show-sql: true
+
+server:
+  forward-headers-strategy: framework  # Habilita detección de protocolo HTTPS en producción    
+    
+springdoc:     
+  swagger-ui:
+    path: /swagger-ui-custom.html 
