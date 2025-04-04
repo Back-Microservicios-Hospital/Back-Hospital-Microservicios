@@ -7,7 +7,7 @@ public class DoctorDTO {
 	private String telefono;
 	private String email;
 	
-	private Long especialidad_id;
+	private Long especialidadId;
 
 	public String getNombre() {
 		return nombre;
@@ -41,13 +41,12 @@ public class DoctorDTO {
 		this.email = email;
 	}
 
-	public Long getEspecialidad_id() {
-		return especialidad_id;
+	public Long getEspecialidadId() {
+		return especialidadId;
 	}
 
-	public void setEspecialidad_id(Long especialidad_id) {
-		this.especialidad_id = especialidad_id;
+	public void setEspecialidadId(Long especialidadId) {
+		this.especialidadId = especialidadId;
 	}
-	
 	
 }
