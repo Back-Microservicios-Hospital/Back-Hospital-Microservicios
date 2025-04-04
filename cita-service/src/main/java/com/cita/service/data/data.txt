@@ -1,0 +1,9 @@
+#Data para la tabla de estados
+
+INSERT INTO estados (id, nombre) VALUES (1, 'Pendiente');
+INSERT INTO estados (id, nombre) VALUES (2, 'Confirmada');
+INSERT INTO estados (id, nombre) VALUES (3, 'Cancelada');
+INSERT INTO estados (id, nombre) VALUES (4, 'Reprogramada');
+INSERT INTO estados (id, nombre) VALUES (5, 'En atención');
+INSERT INTO estados (id, nombre) VALUES (6, 'Atendida');
+INSERT INTO estados (id, nombre) VALUES (7, 'No asistió');
