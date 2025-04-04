@@ -80,14 +80,18 @@ public class Doctor {
 	public void setEspecialidad(Especialidad especialidad) {
 		this.especialidad = especialidad;
 	}
+
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + 
 				", nombre=" + nombre + 
 				", apellido=" + apellido + 
 				", telefono=" + telefono
-				+ ", email=" + email + "]";
+				+ ", email=" + email + 
+				", especialidad=" + especialidad + "]";
 	}
+	
+	
 	
 	
 }

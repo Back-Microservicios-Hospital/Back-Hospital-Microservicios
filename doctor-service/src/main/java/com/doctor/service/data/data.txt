@@ -1,4 +1,4 @@
-#Data para la tabla especialidad
+#Data para la tabla "especialidad"
 INSERT INTO especialidad (id, nombre) VALUES 
 (1, 'Cardiología'),
 (2, 'Neurología'),
@@ -7,3 +7,21 @@ INSERT INTO especialidad (id, nombre) VALUES
 (5, 'Ginecología'),
 (6, 'Oftalmología'),
 (7, 'Psiquiatría');
+
+#Data para la tabla "doctores"
+INSERT INTO doctores (nombre, apellido, telefono, email, especialidad_id) VALUES 
+(1, 'Luis', 'Ramírez', '987654321', 'lramirez@hospital.com', 1),
+(2, 'María', 'González', '912345678', 'mgonzalez@hospital.com', 2),
+(3, 'Carlos', 'Fernández', '923456789', 'cfernandez@hospital.com', 3),
+(4, 'Ana', 'Martínez', '934567890', 'amartinez@hospital.com', 4),
+(5, 'Pedro', 'Torres', '945678901', 'ptorres@hospital.com', 5),
+(6, 'Lucía', 'Vargas', '956789012', 'lvargas@hospital.com', 6),
+(7, 'Jorge', 'Suárez', '967890123', 'jsuarez@hospital.com', 7),
+(8, 'Patricia', 'Reyes', '978901234', 'preyes@hospital.com', 1),
+(9, 'Ricardo', 'Morales', '989012345', 'rmorales@hospital.com', 2),
+(10, 'Carmen', 'Herrera', '990123456', 'cherrera@hospital.com', 3),
+(11, 'José', 'Cruz', '901234567', 'jcruz@hospital.com', 4),
+(12, 'Valeria', 'Mendoza', '912345670', 'vmendoza@hospital.com', 5),
+(13, 'Fernando', 'Navarro', '923456781', 'fnavarro@hospital.com', 6),
+(14,'Adriana', 'Paredes', '934567892', 'aparedes@hospital.com', 7),
+(15, 'Hugo', 'Quispe', '945678903', 'hquispe@hospital.com', 1);

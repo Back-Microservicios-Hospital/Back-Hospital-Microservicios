@@ -28,7 +28,7 @@ import com.paciente.service.entities.Paciente;
 import com.paciente.service.service.PacienteService;
 
 @RestController
-@RequestMapping("api-paciente")
+@RequestMapping("/api/pacientes")
 public class PacienteController {
 
 	private static Logger logger = LoggerFactory.getLogger(PacienteController.class);
@@ -52,7 +52,7 @@ public class PacienteController {
 	}
 	
 	
-	@GetMapping("/list-all")
+	@GetMapping("/list/all")
 	public ResponseEntity<?> getAllPacientes(){
 		
 		try {
@@ -69,7 +69,7 @@ public class PacienteController {
 	}
 	
 	//Listar con paginación
-	@GetMapping("/list-pagination")
+	@GetMapping("/list/pagination")
 	public ResponseEntity<?> getPacientesByPagination(@RequestParam int page,
 												      @RequestParam int size){
 		
@@ -182,7 +182,7 @@ public class PacienteController {
 			pacienteService.deletePaciente(id);
 			
 			logger.info("Paciente Eliminado con éxito");
-			return new ResponseEntity<>("Paciente eliminado con éxito", HttpStatus.OK);
+			return new ResponseEntity<>(Map.of("mensaje", "Paciente eliminado con éxito"), HttpStatus.OK);
 			
 		} catch (Exception e) {
 			logger.error("Error al eliminar el paciente", e);
