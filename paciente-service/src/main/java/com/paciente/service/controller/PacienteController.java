@@ -109,6 +109,52 @@ public class PacienteController {
 		}
 	}
 	
+	//Buscar Paciente por apellido
+	@GetMapping("/find/apellido/{apellido}")
+	public ResponseEntity<?> getPacienteByApellido(@PathVariable String apellido){
+		
+		try {
+			
+			List<Paciente> listPaciente = pacienteService.findPacienteByApelllido(apellido);
+			
+			if (listPaciente.isEmpty()) {
+				logger.error("Error, No pacientes con el apellido: {}", apellido);
+				throw new RuntimeException("Error, No se encontro paciente con el apellido: " + apellido);
+			}
+			
+			logger.info("Paciente encontrado: {}", listPaciente);
+			return new ResponseEntity<>(listPaciente, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("Error, al obtener paciente(s) por apellido", e);
+			return new ResponseEntity<>(Map.of("error", "Error al obtener paciente(s) por el apellido",
+											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//Buscar paciente por dni
+	@GetMapping("/find/dni/{dni}")
+	public ResponseEntity<?> getPacienteByDni(@PathVariable String dni){
+		
+		try {
+			
+			Paciente paciente = pacienteService.findPacienteByDni(dni);
+			
+			if (paciente == null) {
+				logger.error("Error, no hay paciente con el dni: {}", dni);
+				throw new RuntimeException("Error, no hay paciente con el dni: " + dni);
+			}
+			
+			logger.info("Paciente encontrado con el dni ingresado: {}", paciente);
+			return new ResponseEntity<>(paciente, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("Error, al buscar paciente por el dni {}", e);
+			return new ResponseEntity<>(Map.of("error", "Error al buscar el paciente por el dni",
+											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<?> createPaciente(@RequestBody PacienteDTO pacienteDTO){
 		

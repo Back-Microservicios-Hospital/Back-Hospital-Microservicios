@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -35,6 +36,48 @@ public class GraphQLController {
 		}
 	}
 	
+	//Buscar Paciente por apellido
+	@QueryMapping(name = "findPacienteByApellido")
+	public List<Paciente> getPacienteByApellido(@Argument(name = "apellido") String apellido){
+		
+		try {
+			
+			List<Paciente> listPaciente = pacienteService.findPacienteByApelllido(apellido);
+			
+			if (listPaciente.isEmpty()) {
+				logger.error("Error, no hay pacientes con el apellido: {}", apellido);
+				throw new RuntimeException("Error, no hay pacientes con el apellido: " + apellido);
+			}
+			
+			logger.info("Paciente(s) encontrado: {}", listPaciente);
+			return listPaciente;
+			
+		} catch (Exception e) {
+			logger.error("Error al obtener paciente por apellido(s) con GraphQL {}", e);
+			throw new RuntimeException("Error al obtener paciente(s) por apellido con GraphQL"+ e.getMessage());
+		}
+	}
 	
-	
+	//Buscar paciente por dni
+	@QueryMapping(name = "findPacienteByDni")
+	public Paciente getPacienteByDni (@Argument(name = "dni") String dni) {
+		
+		try {
+			
+			Paciente paciente = pacienteService.findPacienteByDni(dni);
+			
+			if (paciente == null) {
+				logger.error("Error, paciente no encontrado con el dni: {}", dni);
+				throw new RuntimeException("Error, paciente no encontrado con el dni: "+ dni);
+			}
+			
+			logger.info("Paciente encontrado con el dni: {}", paciente);
+			return paciente;
+			
+		} catch (Exception e) {
+			logger.error("Error al obtener paciente por el dni con GraphQL {}", e);
+			throw new RuntimeException("Error al obtener paciente por el dni con GraphQL"+ e.getMessage());
+		}
+	}
+		
 }

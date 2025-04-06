@@ -1,6 +1,8 @@
 type Query{
 
-	findPacientes: [Paciente]
+	findPacientes: [Paciente],
+	findPacienteByApellido(apellido: String):[Paciente],
+	findPacienteByDni(dni: String): Paciente
 }
 
 type Paciente{

@@ -36,6 +36,16 @@ public class PacienteService {
 		return pacienteRepository.findById(id);
 	}
 	
+	//Buscar paciente por Apellido
+	public List<Paciente> findPacienteByApelllido(String apellido){
+		return pacienteRepository.findByApellido(apellido);
+	}
+	
+	//Buscar paciente por dni
+	public Paciente findPacienteByDni(String dni) {
+		return pacienteRepository.findByDni(dni);
+	}
+	
 	public void deletePaciente(Long id) {
 		pacienteRepository.deleteById(id);
 	}
