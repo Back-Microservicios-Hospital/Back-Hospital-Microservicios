@@ -1,6 +1,7 @@
 type Query{
 
 	findDoctores: [Doctor]
+	findDoctorByApellido(apellido: String): [Doctor]
 }
 
 type Doctor{
