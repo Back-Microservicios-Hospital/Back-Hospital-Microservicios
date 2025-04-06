@@ -1,0 +1,20 @@
+type Query{
+
+	findDoctores: [Doctor]
+}
+
+type Doctor{
+
+	id: ID,
+	nombre: String,
+	apellido: String,
+	telefono: String,
+	email: String,
+	especialidad: Especialidad
+}
+
+type Especialidad{
+
+	id: ID,
+	nombre: String
+}
