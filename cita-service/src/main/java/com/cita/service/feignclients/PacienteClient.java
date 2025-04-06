@@ -12,4 +12,7 @@ public interface PacienteClient {
 
 	@GetMapping("/find/{id}")
 	PacienteDTO getPacienteById(@PathVariable Long id);
+	
+	@GetMapping("/find/dni/{dni}")
+	PacienteDTO getPacienteByDni(@PathVariable String dni);
 }

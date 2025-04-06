@@ -77,6 +77,26 @@ public class CitaService {
 		}
 
 	}
+	
+	//Buscar paciente por dni
+	public PacienteDTO findPacienteByDni(String dni) {
+		
+		try {
+			
+			PacienteDTO paciente = pacienteClient.getPacienteByDni(dni);
+			
+			if (paciente == null) {
+				logger.error("Error, paciente no encontrado con el dni: {}", dni);
+				throw new RuntimeException("Error, paciente no encontrado con el dni: " + dni);
+			}
+			
+			return paciente;
+			
+		} catch (Exception e) {
+			logger.error("Error, en el service de buscar paciente por el dni {}", e);
+			throw new RuntimeException("Error, en el service de buscar paciente por el dni" + e.getMessage());
+		}
+	}
 
 	public Optional<Cita> findCitaById(Long id) {
 		return citaRepository.findById(id);
