@@ -36,6 +36,11 @@ public class DoctorService {
 		return doctorRepository.findById(id);
 	}
 	
+	//Buscar doctor por apellido
+	public List<Doctor> findDoctorByApellido(String apellido){
+		return doctorRepository.findByApellido(apellido);
+	}
+	
 	public void deleteDoctor(Long id) {
 		doctorRepository.deleteById(id);
 	}
