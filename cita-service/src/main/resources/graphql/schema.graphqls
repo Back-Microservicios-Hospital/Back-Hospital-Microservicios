@@ -1,0 +1,37 @@
+type Query{
+	findCitaByPacienteDni(dni: String):[CitaDetalleDTO]
+}
+
+type CitaDetalleDTO{
+
+	id: ID,
+	fecha: String,
+	paciente: PacienteDTO,
+	doctor: DoctorDTO,
+	estado: Estado
+	
+}
+
+type PacienteDTO{
+
+	id: ID,
+	nombre: String,
+	apellido: String,
+	dni: String,
+	telefono: String,
+	fechaNacimiento: String
+	
+}
+
+type DoctorDTO{
+	id: ID,
+	nombre: String,
+	apellido: String,
+	telefono: String,
+	email: String
+}
+
+type Estado{
+	id: ID,
+	nombre: String
+}
