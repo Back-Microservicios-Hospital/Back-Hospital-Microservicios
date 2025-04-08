@@ -78,6 +78,41 @@ public class CitaService {
 
 	}
 	
+	//Buscar cita por dni
+	public List<CitaDetalleDTO> findCitaByPacienteDni(String dni){
+		
+		try {
+			
+			PacienteDTO paciente = pacienteClient.getPacienteByDni(dni);
+			
+			if (paciente == null) {
+				logger.error("Error, paciente no encontrado con el dni: {}", dni);
+				throw new RuntimeException("Error, paciente no encontrado con el dni: " + dni);
+			}
+			
+			List<Cita> listCita = citaRepository.findByPacienteId(paciente.getId());
+			
+			return listCita.stream().map(citas -> {
+				//Buscando al doctor por el id
+				DoctorDTO doctor = doctorClient.getDoctorById(citas.getDoctorId());
+				
+				CitaDetalleDTO citaDetalle =new CitaDetalleDTO();
+				citaDetalle.setId(citas.getId());
+				citaDetalle.setFecha(citas.getFecha());
+				citaDetalle.setDoctor(doctor);
+				citaDetalle.setPaciente(paciente);
+				citaDetalle.setEstado(citas.getEstado());
+				
+				logger.info("El paciente con el dni {} tiene una cita: {}", dni,citaDetalle);
+				return citaDetalle;
+			}).collect(Collectors.toList());
+			
+		} catch (Exception e) {
+			logger.error("Error, al buscar una cita con el dni de un paciente {}", dni, e);
+			throw new RuntimeException("Error, al buscar una cita con el dni de un paciente" + e.getMessage());
+		}
+	}
+	/*
 	//Buscar paciente por dni
 	public PacienteDTO findPacienteByDni(String dni) {
 		
@@ -97,7 +132,7 @@ public class CitaService {
 			throw new RuntimeException("Error, en el service de buscar paciente por el dni" + e.getMessage());
 		}
 	}
-
+*/
 	public Optional<Cita> findCitaById(Long id) {
 		return citaRepository.findById(id);
 	}
