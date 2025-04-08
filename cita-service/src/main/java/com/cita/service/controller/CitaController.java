@@ -86,6 +86,30 @@ public class CitaController {
 		}
 	}
 	
+	//Buscar cita con dni del paciente
+	@GetMapping("/find/cita/dni/{dni}")
+	public ResponseEntity<?> getCitaByPacienteDni (@PathVariable String dni){
+		
+		try {
+			
+			List<CitaDetalleDTO> listCitas = citaService.findCitaByPacienteDni(dni);
+			
+			if (listCitas.isEmpty()) {
+				logger.error("No hay citas con el DNI del paciente: {}", dni);
+				throw new RuntimeException("Error, no se encontro cita con el DNI del paciente: " + dni);
+			}
+			
+			logger.info("Cita encontrado con el DNI ingresado: {}", listCitas);
+			return new ResponseEntity<>(listCitas, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("Error al buscar citas por el DNI del paciente {}", e);
+			return new ResponseEntity<>(Map.of("error", "Error al buscar citas con el DNI del paciente",
+					    					    "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	/*
 	//Buscar paciente por el dni
 	@GetMapping("/find/paciente/dni/{dni}")
 	public ResponseEntity<?> getPacienteByDni (@PathVariable String dni){
@@ -112,4 +136,5 @@ public class CitaController {
 											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	*/
 }
