@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: historial-service
+  profiles:
+    active:
+    - dev
+    
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:file:.env[.properties]
+
+  cloud:
+    config:
+      uri: http://localhost:8050  
+        
+  data:
+    mongodb:
+      uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster1.6qhmb.mongodb.net/${MONGO_DATABASE}?retryWrites=true&w=majority&appName=Cluster1
+
+server:
+  forward-headers-strategy: framework  # Habilita detección de protocolo HTTPS en producción    
+    
+springdoc:     
+  swagger-ui:
+    path: /swagger-ui-custom.html
