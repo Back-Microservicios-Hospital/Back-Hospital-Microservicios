@@ -1,5 +1,6 @@
 package com.cita.service.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,7 @@ public class CitaService {
 			CitaDetalleDTO detalleCita = new CitaDetalleDTO();
 			detalleCita.setId(cita.getId());
 			detalleCita.setFecha(cita.getFecha());
+			detalleCita.setHora(cita.getHora());
 			detalleCita.setDoctor(doctor);
 			detalleCita.setPaciente(paciente);
 			detalleCita.setEstado(cita.getEstado());
@@ -78,6 +80,36 @@ public class CitaService {
 
 	}
 	
+	//Buscar cita por fecha
+	public List<CitaDetalleDTO> findCitaByFecha (LocalDate fecha){
+		
+		try {
+			
+			List<Cita> citas = citaRepository.findByFecha(fecha);
+			
+			return citas.stream().map(cita -> {
+				DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
+				PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
+				
+				CitaDetalleDTO detalleCita = new CitaDetalleDTO();
+				detalleCita.setId(cita.getId());
+				detalleCita.setFecha(cita.getFecha());
+				detalleCita.setHora(cita.getHora());
+				detalleCita.setDoctor(doctor);
+				detalleCita.setPaciente(paciente);
+				detalleCita.setEstado(cita.getEstado());
+				
+				logger.info("Cita encontrada con la fecha ingresada: {}", detalleCita);
+				return detalleCita;
+				
+			}).collect(Collectors.toList());
+			
+		} catch (Exception e) {
+			logger.error("Error desde el Service al buscar cita por fecha {}", e);
+			throw new RuntimeException("Error desde el Service al buscar cita por fecha " + e.getMessage());
+		}
+	}
+	
 	//Buscar cita por dni
 	public List<CitaDetalleDTO> findCitaByPacienteDni(String dni){
 		
@@ -99,6 +131,7 @@ public class CitaService {
 				CitaDetalleDTO citaDetalle =new CitaDetalleDTO();
 				citaDetalle.setId(citas.getId());
 				citaDetalle.setFecha(citas.getFecha());
+				citaDetalle.setHora(citas.getHora());
 				citaDetalle.setDoctor(doctor);
 				citaDetalle.setPaciente(paciente);
 				citaDetalle.setEstado(citas.getEstado());

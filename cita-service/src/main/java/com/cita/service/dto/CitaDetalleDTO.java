@@ -1,13 +1,15 @@
 package com.cita.service.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.cita.service.entities.Estado;
 
 public class CitaDetalleDTO {
 
 	private Long id;
-	private Date fecha;
+	private LocalDate fecha;
+	private String hora;
 	private PacienteDTO paciente;
 	private DoctorDTO doctor;
 	private Estado estado;
@@ -18,11 +20,19 @@ public class CitaDetalleDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getFecha() {
+	
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
+	}
+	
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 	public PacienteDTO getPaciente() {
 		return paciente;

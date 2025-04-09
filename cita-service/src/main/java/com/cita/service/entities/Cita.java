@@ -1,5 +1,7 @@
 package com.cita.service.entities;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -17,7 +19,8 @@ public class Cita {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date fecha;
+	private LocalDate fecha;
+	private String hora;
 	private Long pacienteId;
 	private Long doctorId;
 	
@@ -29,14 +32,16 @@ public class Cita {
 		super();
 	}
 
-	public Cita(Long id, Date fecha, Long pacienteId, Long doctorId, Estado estado) {
+	public Cita(Long id, LocalDate fecha, String hora, Long pacienteId, Long doctorId, Estado estado) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
+		this.hora = hora;
 		this.pacienteId = pacienteId;
 		this.doctorId = doctorId;
 		this.estado = estado;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -46,13 +51,15 @@ public class Cita {
 		this.id = id;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
+
 
 	public Long getPacienteId() {
 		return pacienteId;
@@ -77,15 +84,26 @@ public class Cita {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+	
+
+	public String getHora() {
+		return hora;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
 
 	@Override
 	public String toString() {
 		return "Cita [id=" + id + 
 				", fecha=" + fecha + 
+				", hora=" + hora + 
 				", pacienteId=" + pacienteId + 
-				", doctorId=" + doctorId
-				+ ", estado=" + estado + "]";
+				", doctorId="+ doctorId + 
+				", estado=" + estado + "]";
 	}
+
 	
 	
 	
