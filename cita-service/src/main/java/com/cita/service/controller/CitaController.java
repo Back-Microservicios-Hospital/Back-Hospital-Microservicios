@@ -1,5 +1,7 @@
 package com.cita.service.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cita.service.dto.CitaDTO;
 import com.cita.service.dto.CitaDetalleDTO;
-import com.cita.service.dto.PacienteDTO;
 import com.cita.service.entities.Cita;
 import com.cita.service.entities.Estado;
 import com.cita.service.service.CitaService;
@@ -61,6 +62,7 @@ public class CitaController {
 			
 			Cita cita = new Cita();
 			cita.setFecha(citaDTO.getFecha());
+			cita.setHora(citaDTO.getHora());
 			cita.setDoctorId(citaDTO.getDoctorId());
 			cita.setPacienteId(citaDTO.getPacienteId());
 			
@@ -106,6 +108,28 @@ public class CitaController {
 			logger.error("Error al buscar citas por el DNI del paciente {}", e);
 			return new ResponseEntity<>(Map.of("error", "Error al buscar citas con el DNI del paciente",
 					    					    "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//Buscar cita por fecha
+	@GetMapping("/find/fecha/{fecha}")
+	public ResponseEntity<?> getCitaByFecha(@PathVariable String fecha){
+		
+		try {
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate localDate = LocalDate.parse(fecha, formatter);
+			
+			List<CitaDetalleDTO> listCitas = citaService.findCitaByFecha(localDate);
+			
+			logger.info("Log del Controller");
+			logger.info("Citas encontradas por la fecha: {}", listCitas);
+			return new ResponseEntity<>(listCitas, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("Error, al encontrar cita por la fecha desde el Controller : {}", e);
+			return new ResponseEntity<>(Map.of("error", "Error, al encontrar cita por fecha",
+											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
