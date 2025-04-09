@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cita.service.dto.CitaDTO;
 import com.cita.service.dto.CitaDetalleDTO;
+import com.cita.service.dto.EstadoDTO;
 import com.cita.service.entities.Cita;
 import com.cita.service.entities.Estado;
 import com.cita.service.service.CitaService;
@@ -129,6 +131,45 @@ public class CitaController {
 		} catch (Exception e) {
 			logger.error("Error, al encontrar cita por la fecha desde el Controller : {}", e);
 			return new ResponseEntity<>(Map.of("error", "Error, al encontrar cita por fecha",
+											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//Actualizar solo el estado de una cita
+	@PatchMapping("/{id}/estado")
+	public ResponseEntity<?> updateCitaEstado (@PathVariable Long id,
+											   @RequestBody Estado estado){
+		
+		try {
+			
+			Optional<Cita> citaOptional = citaService.findCitaById(id);
+			
+			if (citaOptional.isEmpty()) {
+				logger.error("Error, cita no encontrada con el id: {}", id);
+				throw new RuntimeException("Cita no encontrada con el id: " + id);
+			}
+			
+			Optional<Estado> estadoOptional = estadoService.findEstadoById(estado.getId());
+			
+			if (estadoOptional.isEmpty()) {
+				logger.error("Error, estado no encontrado con el id: {}", estado.getId());
+				throw new RuntimeException("Error, estado no encontrado con el id: " + estado.getId());
+			}
+			
+			Estado nuevoEstado = estadoOptional.get();
+			Cita cita = citaOptional.get();
+			
+			cita.setEstado(nuevoEstado);
+			
+			citaService.saveCita(cita);
+			
+			logger.info("Cita actualizada con nuevo estado: {}", cita);
+			return new ResponseEntity<>(cita, HttpStatus.OK);
+			
+			
+		} catch (Exception e) {
+			logger.error("Error al intentar acualizar el estado de una cita {}", e);
+			return new ResponseEntity<>(Map.of("error", "Error al intentar acualizar el estado de una cita",
 											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
