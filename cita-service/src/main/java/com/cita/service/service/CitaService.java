@@ -99,7 +99,8 @@ public class CitaService {
 				detalleCita.setPaciente(paciente);
 				detalleCita.setEstado(cita.getEstado());
 				
-				logger.info("Cita encontrada con la fecha ingresada: {}", detalleCita);
+				
+				logger.info("Fecha ingresada: {} - Citas encontradas: {}", fecha, detalleCita);
 				return detalleCita;
 				
 			}).collect(Collectors.toList());

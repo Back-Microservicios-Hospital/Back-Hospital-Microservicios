@@ -1,8 +1,6 @@
 package com.cita.service.entities;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

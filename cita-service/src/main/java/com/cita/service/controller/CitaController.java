@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cita.service.dto.CitaDTO;
 import com.cita.service.dto.CitaDetalleDTO;
-import com.cita.service.dto.EstadoDTO;
 import com.cita.service.entities.Cita;
 import com.cita.service.entities.Estado;
 import com.cita.service.service.CitaService;
@@ -119,6 +118,7 @@ public class CitaController {
 		
 		try {
 			
+			//Con esto formateo la fecha de String a LocalDate
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate localDate = LocalDate.parse(fecha, formatter);
 			
