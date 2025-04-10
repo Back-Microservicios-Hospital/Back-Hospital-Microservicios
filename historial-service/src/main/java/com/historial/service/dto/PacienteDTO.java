@@ -47,6 +47,11 @@ public class PacienteDTO {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+	@Override
+	public String toString() {
+		return "PacienteDTO [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + "]";
+	}
 	
 	
 }

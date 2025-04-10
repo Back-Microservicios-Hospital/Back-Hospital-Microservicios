@@ -37,11 +37,11 @@ public class HistorialMedicoService {
 		
 		return historiales.stream().map(historial -> {
 			DoctorDTO doctor = doctorClient.getDoctorById(historial.getDoctorId());
-			PacienteDTO paciente = pacienteClient.getPacienteById(historial.getPaciendId());
+			PacienteDTO paciente = pacienteClient.getPacienteById(historial.getPacienteId());
 			
 			HistorialMedicoDetalleDTO historialDetalle = new HistorialMedicoDetalleDTO();
 			historialDetalle.setId(historial.getId());
-			historialDetalle.setDianostico(historial.getDiagnostico());
+			historialDetalle.setDiagnostico(historial.getDiagnostico());
 			historialDetalle.setReceta(historial.getReceta());
 			historialDetalle.setDoctor(doctor);
 			historialDetalle.setPaciente(paciente);
@@ -61,7 +61,7 @@ public class HistorialMedicoService {
 				throw new RuntimeException("Doctor no encontrado");
 			}
 			
-			PacienteDTO paciente = pacienteClient.getPacienteById(historial.getPaciendId());
+			PacienteDTO paciente = pacienteClient.getPacienteById(historial.getPacienteId());
 			
 			if (paciente == null) {
 				logger.error("Error al no encontrar al paciente");
@@ -75,6 +75,47 @@ public class HistorialMedicoService {
 			throw new RuntimeException("No se creo el historial médico" + e);
 		}
 		
+	}
+	
+	//Buscar historial médido con el dni del paciente
+	public List<HistorialMedicoDetalleDTO> getHistorialByPacienteDni(String dni){
+		
+		try {
+			
+			PacienteDTO paciente = pacienteClient.getPacienteByDni(dni);
+			
+			if (paciente == null) {
+				logger.error("Error, no hay paciente con el dni: {}", dni);
+				throw new RuntimeException("Error, con el dni ingresado: " + dni);
+			}
+			
+			List<HistorialMedico> historiales = historialMedicoRepository.findByPacienteId(paciente.getId());
+			
+			if (historiales.isEmpty()) {
+				logger.error("El paciente con el DNI: {}, no tiene historial médico", dni);
+				throw new RuntimeException("El paciente no cuenta con historial médico");
+			}
+			
+			
+			return historiales.stream().map(historial -> {
+				//Hacemos la busqueda del Doctor tambien
+				DoctorDTO doctor = doctorClient.getDoctorById(historial.getDoctorId());
+				
+				HistorialMedicoDetalleDTO historialDTO = new HistorialMedicoDetalleDTO();
+				historialDTO.setId(historial.getId());
+				historialDTO.setDiagnostico(historial.getDiagnostico());
+				historialDTO.setReceta(historial.getReceta());
+				historialDTO.setDoctor(doctor);
+				historialDTO.setPaciente(paciente);
+				
+				logger.info("El paciente con el dni: {}, tiene el historial: {}", dni, historialDTO);
+				return historialDTO;
+			}).collect(Collectors.toList());
+			
+		} catch (Exception e) {
+			logger.error("Error desde el ServiceHistorial, al obtener historial por DNI del paciente: {}", e);
+			throw new RuntimeException("Error desde el ServiceHistorial, al obtener historial por DNI del paciente: " + e.getMessage());
+		}
 	}
 	
 	public Optional<HistorialMedico> findHistorialById (String id){

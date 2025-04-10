@@ -106,8 +106,8 @@ public class CitaController {
 			return new ResponseEntity<>(listCitas, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			logger.error("Error al buscar citas por el DNI del paciente {}", e);
-			return new ResponseEntity<>(Map.of("error", "Error al buscar citas con el DNI del paciente",
+			logger.error("Error al buscar citas por el DNI del paciente: {}",dni, e);
+			return new ResponseEntity<>(Map.of("error", "Error al buscar citas con el DNI del paciente: " + dni,
 					    					    "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -124,13 +124,18 @@ public class CitaController {
 			
 			List<CitaDetalleDTO> listCitas = citaService.findCitaByFecha(localDate);
 			
+			if (listCitas.isEmpty()) {
+				logger.error("Error, no se encontro citas con la fecha: {}", fecha);
+				throw new RuntimeException("No se encontró citas con la fecha: " + fecha);
+			}
+			
 			logger.info("Log del Controller");
 			logger.info("Citas encontradas por la fecha: {}", listCitas);
 			return new ResponseEntity<>(listCitas, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			logger.error("Error, al encontrar cita por la fecha desde el Controller : {}", e);
-			return new ResponseEntity<>(Map.of("error", "Error, al encontrar cita por fecha",
+			return new ResponseEntity<>(Map.of("error", "Error, al encontrar cita con la fecha: " + fecha,
 											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -145,7 +150,7 @@ public class CitaController {
 			
 			if (listCitas.isEmpty()) {
 				logger.error("Doctor apellido: {} No tiene asignado citas", apellido);
-				throw new RuntimeException("Error, no se encontro ninguna cinta con el apellido del doctor");
+				throw new RuntimeException("Error, no se encontro ninguna cita con el apellido del doctor: " + apellido);
 			}
 			
 			logger.info("Doctor apellido: {} , tiene asignados las citas: {}", apellido, listCitas);
@@ -153,7 +158,7 @@ public class CitaController {
 						
 		} catch (Exception e) {
 			logger.error("Error al buscar citas por el apellido del docente {}", e);
-			return new ResponseEntity<>(Map.of("error", "Error al buscar citas por el apellido del doctor",
+			return new ResponseEntity<>(Map.of("error", "Error al buscar citas con el apellido del doctor: " + apellido,
 											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

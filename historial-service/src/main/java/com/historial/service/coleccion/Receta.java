@@ -1,7 +1,6 @@
 package com.historial.service.coleccion;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "receta")
 public class Receta {
@@ -37,6 +36,11 @@ public class Receta {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+	@Override
+	public String toString() {
+		return "Receta [medicamento=" + medicamento + ", dosis=" + dosis + ", cantidad=" + cantidad + "]";
+	}
+	
 	
 	
 }

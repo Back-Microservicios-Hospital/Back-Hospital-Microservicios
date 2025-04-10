@@ -3,7 +3,6 @@ package com.historial.service.coleccion;
 import java.time.LocalDate;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "diagnostico")
 public class Diagnostico {
@@ -31,6 +30,11 @@ public class Diagnostico {
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
+	@Override
+	public String toString() {
+		return "Diagnostico [descripcion=" + descripcion + ", fecha=" + fecha + "]";
+	}
+	
 	
 	
 }
