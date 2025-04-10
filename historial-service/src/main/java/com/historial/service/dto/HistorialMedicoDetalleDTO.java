@@ -8,7 +8,7 @@ import com.historial.service.coleccion.Receta;
 public class HistorialMedicoDetalleDTO {
 
 	private String id;
-	private List<Diagnostico> dianostico;
+	private List<Diagnostico> diagnostico;
 	private List<Receta> receta;
 	private DoctorDTO doctor;
 	private PacienteDTO paciente;
@@ -19,11 +19,12 @@ public class HistorialMedicoDetalleDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<Diagnostico> getDianostico() {
-		return dianostico;
+	
+	public List<Diagnostico> getDiagnostico() {
+		return diagnostico;
 	}
-	public void setDianostico(List<Diagnostico> dianostico) {
-		this.dianostico = dianostico;
+	public void setDiagnostico(List<Diagnostico> diagnostico) {
+		this.diagnostico = diagnostico;
 	}
 	public List<Receta> getReceta() {
 		return receta;
@@ -42,6 +43,11 @@ public class HistorialMedicoDetalleDTO {
 	}
 	public void setPaciente(PacienteDTO paciente) {
 		this.paciente = paciente;
+	}
+	@Override
+	public String toString() {
+		return "HistorialMedicoDetalleDTO [id=" + id + ", diagnostico=" + diagnostico + ", receta=" + receta
+				+ ", doctor=" + doctor + ", paciente=" + paciente + "]";
 	}
 	
 	

@@ -126,6 +126,11 @@ public class CitaService {
 			
 			List<Cita> listCita = citaRepository.findByPacienteId(paciente.getId());
 			
+			if (listCita.isEmpty()) {
+				logger.error("El paciente con el dni: {}, no tiene citas", dni);
+				throw new RuntimeException("No hay cita registrada con el DNI del paciente: " + dni);
+			}
+			
 			return listCita.stream().map(citas -> {
 				//Buscando al doctor por el id
 				DoctorDTO doctor = doctorClient.getDoctorById(citas.getDoctorId());
@@ -143,8 +148,8 @@ public class CitaService {
 			}).collect(Collectors.toList());
 			
 		} catch (Exception e) {
-			logger.error("Error, al buscar una cita con el dni de un paciente {}", dni, e);
-			throw new RuntimeException("Error, al buscar una cita con el dni de un paciente" + e.getMessage());
+			logger.error("Error, al buscar una cita con el dni de un paciente: {}", dni, e);
+			throw new RuntimeException("Error, al buscar una cita con el dni de un paciente: " + e.getMessage());
 		}
 	}
 	

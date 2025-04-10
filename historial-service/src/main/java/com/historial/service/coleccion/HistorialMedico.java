@@ -14,19 +14,19 @@ public class HistorialMedico {
 	//Tanto Diagnostico y Receta son embebidos
 	private List<Diagnostico> diagnostico;
 	private List<Receta> receta;
-	private Long paciendId;
+	private Long pacienteId;
 	private Long doctorId;
 	
 	public HistorialMedico() {
 		super();
 	}
-	public HistorialMedico(String id, List<Diagnostico> diagnostico, List<Receta> receta, Long paciendId,
+	public HistorialMedico(String id, List<Diagnostico> diagnostico, List<Receta> receta, Long pacienteId,
 			Long doctorId) {
 		super();
 		this.id = id;
 		this.diagnostico = diagnostico;
 		this.receta = receta;
-		this.paciendId = paciendId;
+		this.pacienteId = pacienteId;
 		this.doctorId = doctorId;
 	}
 	public String getId() {
@@ -47,11 +47,12 @@ public class HistorialMedico {
 	public void setReceta(List<Receta> receta) {
 		this.receta = receta;
 	}
-	public Long getPaciendId() {
-		return paciendId;
+	
+	public Long getPacienteId() {
+		return pacienteId;
 	}
-	public void setPaciendId(Long paciendId) {
-		this.paciendId = paciendId;
+	public void setPacienteId(Long pacienteId) {
+		this.pacienteId = pacienteId;
 	}
 	public Long getDoctorId() {
 		return doctorId;
@@ -65,7 +66,7 @@ public class HistorialMedico {
 		return "HistorialMedico [id=" + id + 
 				", diagnostico=" + diagnostico + 
 				", receta=" + receta + 
-				", paciendId="+ paciendId + 
+				", pacienteId="+ pacienteId + 
 				", doctorId=" + doctorId + "]";
 	}
 	

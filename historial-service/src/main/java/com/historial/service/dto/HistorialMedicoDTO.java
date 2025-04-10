@@ -9,7 +9,7 @@ public class HistorialMedicoDTO {
 
 	private List<Diagnostico> diagnostico;
 	private List<Receta> receta;
-	private Long paciendId;
+	private Long pacienteId;
 	private Long doctorId;
 	
 	public List<Diagnostico> getDiagnostico() {
@@ -24,11 +24,12 @@ public class HistorialMedicoDTO {
 	public void setReceta(List<Receta> receta) {
 		this.receta = receta;
 	}
-	public Long getPaciendId() {
-		return paciendId;
+	
+	public Long getPacienteId() {
+		return pacienteId;
 	}
-	public void setPaciendId(Long paciendId) {
-		this.paciendId = paciendId;
+	public void setPacienteId(Long pacienteId) {
+		this.pacienteId = pacienteId;
 	}
 	public Long getDoctorId() {
 		return doctorId;
