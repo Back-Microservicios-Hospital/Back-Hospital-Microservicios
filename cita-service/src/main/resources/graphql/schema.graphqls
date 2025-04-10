@@ -2,7 +2,8 @@ type Query{
 	
 	findCitas:[CitaDetalleDTO],
 	findCitaByPacienteDni(dni: String):[CitaDetalleDTO],
-	findCitaByFecha(fecha: String):[CitaDetalleDTO]
+	findCitaByFecha(fecha: String):[CitaDetalleDTO],
+	findCitaByDoctorApellido(apellido: String):[CitaDetalleDTO]
 }
 
 type CitaDetalleDTO{

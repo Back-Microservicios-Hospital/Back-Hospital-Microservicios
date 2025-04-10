@@ -1,7 +1,6 @@
 package com.cita.service.dto;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import com.cita.service.entities.Estado;
 
