@@ -1,6 +1,7 @@
 package com.cita.service.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -111,7 +112,7 @@ public class CitaService {
 		}
 	}
 	
-	//Buscar cita por dni
+	//Buscar cita por dni del paciente
 	public List<CitaDetalleDTO> findCitaByPacienteDni(String dni){
 		
 		try {
@@ -146,6 +147,48 @@ public class CitaService {
 			throw new RuntimeException("Error, al buscar una cita con el dni de un paciente" + e.getMessage());
 		}
 	}
+	
+	//Buscar cita por apellido del doctor
+	public List<CitaDetalleDTO> findCitaByDoctorApellido(String apellido){
+		
+		try {
+			
+			List<DoctorDTO> doctores = doctorClient.getDoctorByApellido(apellido);
+			
+			if (doctores == null) {
+				logger.error("Error, no hay cita con el apellido del doctor: {}", apellido);
+				throw new RuntimeException("Error, no hay cita con el apellido del doctor " + apellido);
+			}
+			
+			//Esto lo hago porque cuando se busca un doctor por apellido, este devuelve una lista de doctores
+			List<CitaDetalleDTO> resultado = new ArrayList<>();
+
+	        for (DoctorDTO doctor : doctores) {
+	            List<Cita> citas = citaRepository.findByDoctorId(doctor.getId());
+
+	            for (Cita cita : citas) {
+	                PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
+
+	                CitaDetalleDTO detalleCita = new CitaDetalleDTO();
+	                detalleCita.setId(cita.getId());
+	                detalleCita.setFecha(cita.getFecha());
+	                detalleCita.setHora(cita.getHora());
+	                detalleCita.setDoctor(doctor); // Ahora sí, doctor individual
+	                detalleCita.setPaciente(paciente);
+	                detalleCita.setEstado(cita.getEstado());
+
+	                logger.info("Apellido del doctor: {} | Cita encontrada: {}", apellido, detalleCita);
+	                resultado.add(detalleCita);
+	            }
+	        }
+	        return resultado;
+			
+		} catch (Exception e) {
+			logger.error("Error, al buscar una cita con el apellido del doctor: {}", apellido, e);
+			throw new RuntimeException("Error, al buscar una cita con el apellido del doctor" + e.getMessage());
+		}
+	}
+	
 	/*
 	//Buscar paciente por dni
 	public PacienteDTO findPacienteByDni(String dni) {

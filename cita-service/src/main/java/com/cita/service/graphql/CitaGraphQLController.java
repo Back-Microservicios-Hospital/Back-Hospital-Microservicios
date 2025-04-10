@@ -90,4 +90,27 @@ public class CitaGraphQLController {
 			throw new RuntimeException("Error, no se pudo buscar citas por la fecha con GraphQL " + e.getMessage());
 		}
 	}
+	
+	//Buscar cita por apellido del doctor
+	@QueryMapping(name = "findCitaByDoctorApellido")
+	public List<CitaDetalleDTO> getCitaByDoctorApellido (@Argument(name = "apellido") String apellido){
+		
+		try {
+			
+			List<CitaDetalleDTO> listCitas = citaService.findCitaByDoctorApellido(apellido);
+			
+			if (listCitas.isEmpty()) {
+				logger.error("El Doctor: {} no tiene asignado citas", apellido);
+				throw new RuntimeException("Error, el doctor no tiene citas asignadas ");
+			}
+			
+			logger.info("Búsqueda con GraphQL");
+			logger.info("El Doctor: {} tiene las citas: {}", apellido, listCitas);
+			return listCitas;
+			
+		} catch (Exception e) {
+			logger.error("Error, no se pudo buscar citas por el apellido del doctor con GraphQL {}", e);
+			throw new RuntimeException("Error, no se pudo buscar citas por el apellido del doctor con GraphQL " + e.getMessage());
+		}
+	}
 }

@@ -123,6 +123,7 @@ public class DoctorController {
 		}
 	}
 
+
 	@PostMapping("/create")
 	public ResponseEntity<?> createDoctor(@RequestBody DoctorDTO doctorDTO) {
 

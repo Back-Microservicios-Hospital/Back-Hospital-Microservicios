@@ -15,4 +15,7 @@ public interface CitaRepository extends JpaRepository<Cita, Long>{
 	//Buscar cita por fecha
 	List<Cita> findByFecha(LocalDate fecha);
 	
+	//Buscar cita por apellido del Doctor (Donde el id es necesario)
+	List<Cita> findByDoctorId(Long doctorId);
+	
 }

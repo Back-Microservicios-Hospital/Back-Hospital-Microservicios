@@ -1,5 +1,7 @@
 package com.cita.service.feignclients;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,4 +14,7 @@ public interface DoctorClient {
 
 	@GetMapping("/find/{id}")
 	DoctorDTO getDoctorById(@PathVariable Long id);
+	
+	@GetMapping("/find/apellido/{apellido}")
+	List<DoctorDTO> getDoctorByApellido(@PathVariable String apellido);
 }

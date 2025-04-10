@@ -135,6 +135,29 @@ public class CitaController {
 		}
 	}
 	
+	//Buscar cita por apellido del Doctor
+	@GetMapping("/find/doctor/apellido/{apellido}")
+	public ResponseEntity<?> getCitaByDoctorApellido(@PathVariable String apellido){
+		
+		try {
+			
+			List<CitaDetalleDTO> listCitas = citaService.findCitaByDoctorApellido(apellido);
+			
+			if (listCitas.isEmpty()) {
+				logger.error("Doctor apellido: {} No tiene asignado citas", apellido);
+				throw new RuntimeException("Error, no se encontro ninguna cinta con el apellido del doctor");
+			}
+			
+			logger.info("Doctor apellido: {} , tiene asignados las citas: {}", apellido, listCitas);
+			return new ResponseEntity<>(listCitas, HttpStatus.OK);
+						
+		} catch (Exception e) {
+			logger.error("Error al buscar citas por el apellido del docente {}", e);
+			return new ResponseEntity<>(Map.of("error", "Error al buscar citas por el apellido del doctor",
+											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	//Actualizar solo el estado de una cita
 	@PatchMapping("/{id}/estado")
 	public ResponseEntity<?> updateCitaEstado (@PathVariable Long id,
