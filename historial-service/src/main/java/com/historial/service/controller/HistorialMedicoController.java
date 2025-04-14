@@ -2,6 +2,7 @@ package com.historial.service.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,6 +93,37 @@ public class HistorialMedicoController {
 			logger.error("Error, al crear el historial médico: {}", e);
 			return new ResponseEntity<>(Map.of("error", "Error, al crear el historial médico",
 											   "detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping("/update/{id}")
+	private ResponseEntity<?> updateHistorial (@PathVariable String id,
+											   @RequestBody HistorialMedicoDTO historialMedicoDTO){
+		
+		try {
+			
+			Optional<HistorialMedico> historialOptional = historialMedicoService.findHistorialById(id);
+			
+			if (historialOptional.isEmpty()) {
+				logger.error("Error, no se encontro el historial con el id: {}", id);
+				throw new RuntimeException("No se encontro el historial con el id: " + id);
+			}
+			
+			HistorialMedico historial = historialOptional.get();
+			historial.setDiagnostico(historialMedicoDTO.getDiagnostico());
+			historial.setReceta(historialMedicoDTO.getReceta());
+			historial.setDoctorId(historialMedicoDTO.getDoctorId());
+			historial.setPacienteId(historialMedicoDTO.getPacienteId());
+			
+			historialMedicoService.saveHistorial(historial);
+			
+			logger.info("Historial Médico actualizado: {}", historial);
+			return new ResponseEntity<>(historial, HttpStatus.OK);
+						
+		} catch (Exception e) {
+			logger.error("Error, al actualizar el historial con el id: "+ id);
+			return new ResponseEntity<>(Map.of("error", "Error, al actualizar el historial con el id: " + id,
+												"detalle", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
