@@ -1,0 +1,45 @@
+type Query{
+	
+	findHistoriales: [HistorialMedicoDTO]
+}
+
+type HistorialMedicoDTO{
+
+	id: ID,
+	diagnostico: [Diagnostico],
+	receta: [Receta],
+	doctor: DoctorDTO,
+	paciente: PacienteDTO
+}
+
+type Receta {
+
+	medicamento: String,
+	dosis: String
+	cantidad: Int
+}
+
+type Diagnostico{
+		
+	descripcion: String,
+	fecha: String		
+}
+
+type PacienteDTO{
+
+	id: ID,
+	nombre: String,
+	apellido: String,
+	dni: String,
+	telefono: String,
+	fechaNacimiento: String
+	
+}
+
+type DoctorDTO{
+	id: ID,
+	nombre: String,
+	apellido: String,
+	telefono: String,
+	email: String
+}
