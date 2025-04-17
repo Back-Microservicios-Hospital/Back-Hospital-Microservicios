@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cita.service.dto.CitaDetalleDTO;
+import com.cita.service.dto.CitaNuevaNotificacionRequest;
 import com.cita.service.dto.DoctorDTO;
 import com.cita.service.dto.PacienteDTO;
 import com.cita.service.entities.Cita;
@@ -31,6 +32,9 @@ public class CitaService {
 
 	@Autowired
 	private PacienteClient pacienteClient;
+	
+	@Autowired
+	private CitaProducer citaProducer;
 
 	public List<CitaDetalleDTO> findAllCitas() {
 		
@@ -58,6 +62,7 @@ public class CitaService {
 
 		try {
 			
+			/*
 			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
 			
 			if (doctor == null) {
@@ -73,6 +78,36 @@ public class CitaService {
 			}
 			
 			return citaRepository.save(cita);
+			*/
+			
+			Cita citaGuardada = citaRepository.save(cita);
+			
+			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
+			
+			if (doctor == null) {
+				logger.error("Doctor no encontrado con el id: {}", cita.getDoctorId());
+				throw new RuntimeException("Doctor no encontrado con ID: " + cita.getDoctorId());
+			}
+			
+			PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
+			
+			if (paciente == null) {
+				logger.error("Paciente no encontrado con el id: {}", cita.getPacienteId());
+				throw new RuntimeException("Paciente no encontrado con ID: " + cita.getPacienteId());
+			}
+			
+			//Aca capturamos los valores para enviar la notificación de una nueva cita
+			CitaNuevaNotificacionRequest citaNotificacion = new CitaNuevaNotificacionRequest();
+			citaNotificacion.setPacienteId(cita.getPacienteId());
+			citaNotificacion.setDoctorAsignado(doctor.getApellido());
+			citaNotificacion.setFechaCita(cita.getFecha());
+			citaNotificacion.setHora(cita.getHora());
+			citaNotificacion.setEstadoCita(cita.getEstado().getNombre());
+			
+			citaProducer.enviarNotificacionNuevaCita(citaNotificacion);
+					
+			return citaGuardada;
+			
 			
 		} catch (Exception e) {
 			logger.error("Error en el service para crear una cita {}", e);
