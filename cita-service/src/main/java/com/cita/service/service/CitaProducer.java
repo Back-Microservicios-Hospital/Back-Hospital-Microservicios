@@ -28,8 +28,8 @@ public class CitaProducer {
 			}
 			
 			logger.info("Notificación enviada con éxito enviarNotificacionNuevaCita: {}", result.getProducerRecord().value());
-			logger.info("CITA NUEVA ENVIADAD A notificación-service con la siguiente información: ");
-			logger.info("Cita notifiacada: {}", eventoCitaNueva);
+			logger.info("CITA NUEVA ENVIADA A notificación-service con la siguiente información: ");
+			logger.info("Cita notificada: {}", eventoCitaNueva);
 			logger.info("Partición {}, Offset {}", result.getRecordMetadata().partition());
 		});
 	}

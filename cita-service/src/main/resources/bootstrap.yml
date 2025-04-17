@@ -15,6 +15,10 @@ spring:
   cloud:
     config:
       uri: http://localhost:8050 
+ 
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
               
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=${SQLSERVER_DATABASE};encrypt=false

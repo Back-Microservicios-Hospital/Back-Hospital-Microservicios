@@ -24,6 +24,7 @@ public class KafkaAdminConfig {
 	}
 	
 	//Creando los topicos
+	@Bean
 	public KafkaAdmin.NewTopics topic(){
 		return new KafkaAdmin.NewTopics(
 				TopicBuilder.name("cita-nueva")

@@ -15,6 +15,9 @@ public class Notificacion {
 	private String mensaje;
 	private LocalDate fecha;
 	
+	@Field(name = "hora_cita")
+	private String horaCita;
+	
 	@Field(name = "fecha_cita")
 	private LocalDate fechaCita;
 	
@@ -31,18 +34,21 @@ public class Notificacion {
 		super();
 	}
 
-	public Notificacion(String id, String titulo, String mensaje, LocalDate fecha, LocalDate fechaCita,
+	public Notificacion(String id, String titulo, String mensaje, LocalDate fecha, String horaCita, LocalDate fechaCita,
 			String estadoCita, String nombreDoctor, Long pacienteId) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.mensaje = mensaje;
 		this.fecha = fecha;
+		this.horaCita = horaCita;
 		this.fechaCita = fechaCita;
 		this.estadoCita = estadoCita;
 		this.nombreDoctor = nombreDoctor;
 		this.pacienteId = pacienteId;
 	}
+
+
 
 	public String getId() {
 		return id;
@@ -108,20 +114,20 @@ public class Notificacion {
 		this.pacienteId = pacienteId;
 	}
 
-	@Override
-	public String toString() {
-		return "Notificacion [id=" + id + 
-				", titulo=" + titulo + 
-				", mensaje=" + mensaje + 
-				", fecha=" + fecha
-				+ ", fechaCita=" + fechaCita + 
-				", estadoCita=" + estadoCita + 
-				", nombreDoctor=" + nombreDoctor
-				+ ", pacienteId=" + pacienteId + "]";
+	public String getHoraCita() {
+		return horaCita;
 	}
 
-	
+	public void setHoraCita(String horaCita) {
+		this.horaCita = horaCita;
+	}
 
+	@Override
+	public String toString() {
+		return "Notificacion [id=" + id + ", titulo=" + titulo + ", mensaje=" + mensaje + ", fecha=" + fecha
+				+ ", horaCita=" + horaCita + ", fechaCita=" + fechaCita + ", estadoCita=" + estadoCita
+				+ ", nombreDoctor=" + nombreDoctor + ", pacienteId=" + pacienteId + "]";
+	}
 	
 	
 }
