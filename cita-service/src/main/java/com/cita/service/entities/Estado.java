@@ -1,10 +1,13 @@
 package com.cita.service.entities;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -17,8 +20,8 @@ public class Estado {
 	private Long id;
 	private String nombre;
 	
-	@OneToOne(mappedBy = "estado", cascade = CascadeType.ALL)
-	private Cita cita;
+	@OneToMany(mappedBy = "estado", cascade = CascadeType.ALL)
+	private List<Cita> cita;
 	
 	public Estado() {
 		super();

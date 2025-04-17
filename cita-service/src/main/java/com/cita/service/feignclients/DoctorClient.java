@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.cita.service.dto.DoctorDTO;
 
 //@FeignClient(name = "paciente-service") //Con Eureka
-@FeignClient(name = "doctor-service", url = "http://localhost:9092", path = "/api/doctores") //Sin Eureka
+@FeignClient(name = "doctor-service", url = "http://localhost:9096", path = "/api/doctores") //Sin Eureka
 public interface DoctorClient {
 
 	@GetMapping("/find/{id}")

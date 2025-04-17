@@ -1,5 +1,6 @@
 package com.notificacion.service.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.notificacion.service.coleccion.Notificacion;
+import com.notificacion.service.dto.CitaNuevaNotificacionResponde;
 import com.notificacion.service.dto.NotificacionDetalleDTO;
 import com.notificacion.service.dto.PacienteDTO;
 import com.notificacion.service.feignclients.PacienteClient;
@@ -47,9 +49,32 @@ public class NotificacionService {
 			return notificacionDetalle;
 				
 		}).collect(Collectors.toList());
+			
 		
+	}
+	
+	//Esto es para guardar la notificacion de una cita nueva
+	public Notificacion saveNotificacionCitaNueva(CitaNuevaNotificacionResponde citaNueva) {
 		
-		
+		try {
+			
+			Notificacion notificacion = new Notificacion();
+			notificacion.setTitulo("Nueva Cita");
+			notificacion.setMensaje("Se registró una nueva cita al sistema");
+			notificacion.setFecha(LocalDate.now());
+			notificacion.setFechaCita(citaNueva.getFechaCita());
+			notificacion.setHoraCita(citaNueva.getHora());
+			notificacion.setEstadoCita(citaNueva.getEstadoCita());
+			notificacion.setNombreDoctor(citaNueva.getDoctorAsignado());
+			notificacion.setPacienteId(citaNueva.getPacienteId());
+			
+			logger.info("Se registró una nueva notificación con una nueva cita con éxito !");
+			return notificacionRepository.save(notificacion);
+						
+		} catch (Exception e) {
+			logger.error("Error al registrar una notificación de una nueva cita: {}", e);
+			throw new RuntimeException("Error al registrar una notificación de una cita nueva " + e.getMessage());
+		}
 	}
 	
 	

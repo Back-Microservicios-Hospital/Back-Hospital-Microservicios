@@ -38,6 +38,11 @@ public class DoctorDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "DoctorDTO [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono
+				+ ", email=" + email + "]";
+	}
 	
 	
 }

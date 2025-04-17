@@ -16,6 +16,10 @@ spring:
   cloud:
     config:
       uri: http://localhost:8050  
+
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
         
   data:
     mongodb:

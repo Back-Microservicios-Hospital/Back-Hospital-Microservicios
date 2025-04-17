@@ -41,6 +41,12 @@ public class CitaDTO {
 	public void setEstadoId(Long estadoId) {
 		this.estadoId = estadoId;
 	}
+	@Override
+	public String toString() {
+		return "CitaDTO [fecha=" + fecha + ", hora=" + hora + ", pacienteId=" + pacienteId + ", doctorId=" + doctorId
+				+ ", estadoId=" + estadoId + "]";
+	}
+	
 	
 	
 }

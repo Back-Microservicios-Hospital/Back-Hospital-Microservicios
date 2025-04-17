@@ -1,19 +1,19 @@
-package com.cita.service.dto;
+package com.notificacion.service.dto;
 
 import java.time.LocalDate;
 
-public class CitaNuevaNotificacionRequest {
+public class CitaNuevaNotificacionResponde {
 
 	private LocalDate fechaCita;
 	private String hora;
 	private Long pacienteId;
 	private String doctorAsignado;
-	private String estadoCita;
+	private String estadoCita;	
 	
-	public CitaNuevaNotificacionRequest() {
+	public CitaNuevaNotificacionResponde() {
 		super();
 	}
-	public CitaNuevaNotificacionRequest(LocalDate fechaCita, String hora, Long pacienteId, String doctorAsignado,
+	public CitaNuevaNotificacionResponde(LocalDate fechaCita, String hora, Long pacienteId, String doctorAsignado,
 			String estadoCita) {
 		super();
 		this.fechaCita = fechaCita;

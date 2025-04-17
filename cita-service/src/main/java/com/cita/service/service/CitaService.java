@@ -80,7 +80,7 @@ public class CitaService {
 			return citaRepository.save(cita);
 			*/
 			
-			Cita citaGuardada = citaRepository.save(cita);
+			//Cita citaGuardada = 
 			
 			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
 			
@@ -106,12 +106,12 @@ public class CitaService {
 			
 			citaProducer.enviarNotificacionNuevaCita(citaNotificacion);
 					
-			return citaGuardada;
+			return citaRepository.save(cita);
 			
 			
 		} catch (Exception e) {
 			logger.error("Error en el service para crear una cita {}", e);
-			throw new RuntimeException("No se crear la cita, error en el service" + e.getMessage());
+			throw new RuntimeException("No se logró crear la cita: " + e.getMessage());
 		}
 
 	}
