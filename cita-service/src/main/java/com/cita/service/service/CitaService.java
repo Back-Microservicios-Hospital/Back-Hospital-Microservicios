@@ -61,27 +61,7 @@ public class CitaService {
 	public Cita saveCita(Cita cita) {
 
 		try {
-			
-			/*
-			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
-			
-			if (doctor == null) {
-				logger.error("Doctor no encontrado con el id: {}", cita.getDoctorId());
-				throw new RuntimeException("Doctor no encontrado con ID: " + cita.getDoctorId());
-			}
-			
-			PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
-			
-			if (paciente == null) {
-				logger.error("Paciente no encontrado con el id: {}", cita.getPacienteId());
-				throw new RuntimeException("Paciente no encontrado con ID: " + cita.getPacienteId());
-			}
-			
-			return citaRepository.save(cita);
-			*/
-			
-			//Cita citaGuardada = 
-			
+						
 			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
 			
 			if (doctor == null) {
@@ -99,7 +79,7 @@ public class CitaService {
 			//Aca capturamos los valores para enviar la notificación de una nueva cita
 			CitaNuevaNotificacionRequest citaNotificacion = new CitaNuevaNotificacionRequest();
 			citaNotificacion.setPacienteId(cita.getPacienteId());
-			citaNotificacion.setDoctorAsignado(doctor.getApellido());
+			citaNotificacion.setDoctorAsignado(doctor.getNombre()+ " " + doctor.getApellido());
 			citaNotificacion.setFechaCita(cita.getFecha());
 			citaNotificacion.setHora(cita.getHora());
 			citaNotificacion.setEstadoCita(cita.getEstado().getNombre());
@@ -110,10 +90,51 @@ public class CitaService {
 			
 			
 		} catch (Exception e) {
-			logger.error("Error en el service para crear una cita {}", e);
+			logger.error("Error al registrar una cita nueva: {}", e);
 			throw new RuntimeException("No se logró crear la cita: " + e.getMessage());
 		}
 
+	}
+	
+	//Esto método es solo para capturar los valores de la cita y su estado actualizado
+	//Y enviarselo con kafka a notificacion-service
+	public Cita updateCitaEstado (Cita cita) {
+		
+		try {
+			
+			DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
+			
+			if (doctor == null) {
+				logger.error("Doctor no encontrado con el id: {}", cita.getDoctorId());
+				throw new RuntimeException("Doctor no encontrado con ID: " + cita.getDoctorId());
+			}
+			
+			PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
+			
+			if (paciente == null) {
+				logger.error("Paciente no encontrado con el id: {}", cita.getPacienteId());
+				throw new RuntimeException("Paciente no encontrado con ID: " + cita.getPacienteId());
+			}
+			
+			//Y aca envio la notificacion con el estado actualizado de la cita
+			//Estoy usando la misma clase CitaNuevaNotificacionRequest que es para notificar una nueva cita,
+			//esto lo hago porque los parametros y valores son los mismos
+			CitaNuevaNotificacionRequest citaEstadoNotificacion = new CitaNuevaNotificacionRequest();
+			citaEstadoNotificacion.setPacienteId(cita.getPacienteId());
+			citaEstadoNotificacion.setDoctorAsignado(doctor.getNombre() + " " + doctor.getApellido());
+			citaEstadoNotificacion.setFechaCita(cita.getFecha());
+			citaEstadoNotificacion.setHora(cita.getHora());
+			citaEstadoNotificacion.setEstadoCita(cita.getEstado().getNombre());
+			
+			citaProducer.enviarNotificacionCitaEstadoActualizado(citaEstadoNotificacion);
+			
+			return citaRepository.save(cita);
+			
+			
+		} catch (Exception e) {
+			logger.error("Error al actualizar el estado de la cita: {}", e);
+			throw new RuntimeException("No se logró actualizar el estado de la cita: " + e.getMessage());
+		}
 	}
 	
 	//Buscar cita por fecha

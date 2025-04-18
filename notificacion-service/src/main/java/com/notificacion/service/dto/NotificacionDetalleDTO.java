@@ -9,6 +9,7 @@ public class NotificacionDetalleDTO {
 	private String mensaje;
 	private LocalDate fecha;
 	private LocalDate fechaCita;
+	private String horaCita;
 	private String estadoCita;
 	private String nombreDoctor;
 	private PacienteDTO paciente;
@@ -62,15 +63,20 @@ public class NotificacionDetalleDTO {
 	public void setPaciente(PacienteDTO paciente) {
 		this.paciente = paciente;
 	}
+		
+	public String getHoraCita() {
+		return horaCita;
+	}
+	public void setHoraCita(String horaCita) {
+		this.horaCita = horaCita;
+	}
 	
 	@Override
 	public String toString() {
 		return "NotificacionDetalleDTO [id=" + id + ", titulo=" + titulo + ", mensaje=" + mensaje + ", fecha=" + fecha
-				+ ", fechaCita=" + fechaCita + ", estadoCita=" + estadoCita + ", nombreDoctor=" + nombreDoctor
-				+ ", paciente=" + paciente + "]";
+				+ ", fechaCita=" + fechaCita + ", horaCita=" + horaCita + ", estadoCita=" + estadoCita
+				+ ", nombreDoctor=" + nombreDoctor + ", paciente=" + paciente + "]";
 	}
-	
-	
 	
 	
 	

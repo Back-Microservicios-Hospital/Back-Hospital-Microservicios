@@ -30,6 +30,10 @@ public class KafkaAdminConfig {
 				TopicBuilder.name("cita-nueva")
 				.partitions(2)
 				.replicas(1)
+				.build(),
+				TopicBuilder.name("cita-actualizada")
+				.partitions(2)
+				.replicas(1)
 				.build()
 				);				
 	}
