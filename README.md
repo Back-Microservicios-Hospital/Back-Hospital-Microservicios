@@ -33,4 +33,5 @@ Este repositorio contiene el backend para el sistema de un Hospital. Se puede ta
 - **Srping Cloud Gateway**
 
 ## Mapa de la arquitectura del proyecto
+
 ![Image](https://github.com/user-attachments/assets/01170fa4-2189-4221-9976-42ff550e78ae)
