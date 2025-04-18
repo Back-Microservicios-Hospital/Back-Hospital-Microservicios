@@ -23,6 +23,7 @@ import com.cita.service.dto.CitaDTO;
 import com.cita.service.dto.CitaDetalleDTO;
 import com.cita.service.entities.Cita;
 import com.cita.service.entities.Estado;
+import com.cita.service.service.CitaProducer;
 import com.cita.service.service.CitaService;
 import com.cita.service.service.EstadoService;
 
@@ -189,9 +190,13 @@ public class CitaController {
 			
 			cita.setEstado(nuevoEstado);
 			
-			citaService.saveCita(cita);
+			//citaService.saveCita(cita);
 			
-			logger.info("Cita actualizada con nuevo estado: {}", cita);
+			//Esto es para kafka producer y enviar la notificacion del estado actualizado
+			//Ademas actualiza la cita y su estado
+			citaService.updateCitaEstado(cita);
+			
+			logger.info("Cita actualizada con el nuevo estado: {}", cita);
 			return new ResponseEntity<>(cita, HttpStatus.OK);
 			
 			

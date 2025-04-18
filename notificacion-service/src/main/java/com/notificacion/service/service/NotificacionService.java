@@ -41,6 +41,7 @@ public class NotificacionService {
 			notificacionDetalle.setMensaje(notificacion.getMensaje());
 			notificacionDetalle.setFecha(notificacion.getFecha());
 			notificacionDetalle.setFechaCita(notificacion.getFechaCita());
+			notificacionDetalle.setHoraCita(notificacion.getHoraCita());
 			notificacionDetalle.setEstadoCita(notificacion.getEstadoCita());
 			notificacionDetalle.setNombreDoctor(notificacion.getNombreDoctor());
 			notificacionDetalle.setPaciente(paciente);
@@ -76,6 +77,31 @@ public class NotificacionService {
 			throw new RuntimeException("Error al registrar una notificación de una cita nueva " + e.getMessage());
 		}
 	}
+	
+	//Esto es para guardar la notificacion de una cita con el estado actualizado
+		public Notificacion saveNotificacionCitaEstadoActualizado(CitaNuevaNotificacionResponde citaEstadoActualizado) {
+			
+			try {
+				
+				Notificacion notificacion = new Notificacion();
+				notificacion.setTitulo("Estado actualizado de la cita");
+				notificacion.setMensaje("El estado de la cita cambio a: " + citaEstadoActualizado.getEstadoCita());
+				notificacion.setFecha(LocalDate.now());
+				notificacion.setFechaCita(citaEstadoActualizado.getFechaCita());
+				notificacion.setHoraCita(citaEstadoActualizado.getHora());
+				notificacion.setEstadoCita(citaEstadoActualizado.getEstadoCita());
+				notificacion.setNombreDoctor(citaEstadoActualizado.getDoctorAsignado());
+				notificacion.setPacienteId(citaEstadoActualizado.getPacienteId());
+				
+				logger.info("Se registró una nueva notificación con el estado de la cita actualizada con éxito !");
+				return notificacionRepository.save(notificacion);
+							
+			} catch (Exception e) {
+				logger.error("Error al registrar una notificación de la cita con el estado actualizado: {}", e);
+				throw new RuntimeException("Error al registrar una notificación de la cita con el estado actualizado: " + e.getMessage());
+			}
+		}
+	
 	
 	
 }
