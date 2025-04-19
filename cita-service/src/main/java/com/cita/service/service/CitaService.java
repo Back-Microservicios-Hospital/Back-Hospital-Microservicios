@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cita.service.dto.CitaDetalleDTO;
@@ -56,6 +60,31 @@ public class CitaService {
 			
 		}).collect(Collectors.toList());
 	
+	}
+	
+	//Listar citas con paginacion
+	public Page<CitaDetalleDTO> findCitasByPagination (int page, int size){
+		
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Cita> citasPage = citaRepository.findAll(pageable);
+		
+		
+		List<CitaDetalleDTO> detalles = citasPage.getContent().stream().map(cita -> {
+	        DoctorDTO doctor = doctorClient.getDoctorById(cita.getDoctorId());
+	        PacienteDTO paciente = pacienteClient.getPacienteById(cita.getPacienteId());
+
+	        CitaDetalleDTO detalleCita = new CitaDetalleDTO();
+	        detalleCita.setId(cita.getId());
+	        detalleCita.setFecha(cita.getFecha());
+	        detalleCita.setHora(cita.getHora());
+	        detalleCita.setDoctor(doctor);
+	        detalleCita.setPaciente(paciente);
+	        detalleCita.setEstado(cita.getEstado());
+
+	        return detalleCita;
+	    }).collect(Collectors.toList());
+
+	    return new PageImpl<>(detalles, pageable, citasPage.getTotalElements());
 	}
 
 	public Cita saveCita(Cita cita) {
